@@ -1,7 +1,7 @@
 
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { Menu, X, User, LogIn } from "lucide-react";
+import { Menu, X, User, LogIn, Home, Bell, Settings } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 const Navbar = () => {
@@ -10,6 +10,10 @@ const Navbar = () => {
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
+  };
+
+  const closeMenu = () => {
+    setIsMenuOpen(false);
   };
 
   return (
@@ -21,6 +25,9 @@ const Navbar = () => {
               <span className="text-primary font-bold text-xl">Nest Care</span>
             </Link>
             <div className="hidden sm:ml-6 sm:flex sm:space-x-8">
+              <Link to="/" className="text-gray-700 hover:text-primary px-3 py-2 text-sm font-medium">
+                Home
+              </Link>
               <Link to="/services" className="text-gray-700 hover:text-primary px-3 py-2 text-sm font-medium">
                 Services
               </Link>
@@ -35,14 +42,26 @@ const Navbar = () => {
               </Link>
             </div>
           </div>
-          <div className="hidden sm:flex items-center">
+          <div className="hidden sm:flex items-center space-x-4">
             {isLoggedIn ? (
-              <Link to="/dashboard">
-                <Button variant="ghost" className="flex items-center gap-2">
-                  <User size={18} />
-                  Dashboard
-                </Button>
-              </Link>
+              <div className="flex items-center space-x-2">
+                <Link to="/notifications">
+                  <Button variant="ghost" size="icon">
+                    <Bell size={18} />
+                  </Button>
+                </Link>
+                <Link to="/dashboard">
+                  <Button variant="ghost" className="flex items-center gap-2">
+                    <User size={18} />
+                    Dashboard
+                  </Button>
+                </Link>
+                <Link to="/settings">
+                  <Button variant="ghost" size="icon">
+                    <Settings size={18} />
+                  </Button>
+                </Link>
+              </div>
             ) : (
               <div className="flex gap-2">
                 <Link to="/login">
@@ -72,56 +91,69 @@ const Navbar = () => {
       {/* Mobile menu */}
       {isMenuOpen && (
         <div className="sm:hidden">
-          <div className="pt-2 pb-3 space-y-1">
+          <div className="pt-2 pb-3 space-y-1" onClick={closeMenu}>
+            <Link
+              to="/"
+              className="block px-3 py-2 text-base font-medium text-gray-700 hover:bg-gray-50 hover:text-primary"
+            >
+              Home
+            </Link>
             <Link
               to="/services"
               className="block px-3 py-2 text-base font-medium text-gray-700 hover:bg-gray-50 hover:text-primary"
-              onClick={toggleMenu}
             >
               Services
             </Link>
             <Link
               to="/professionals"
               className="block px-3 py-2 text-base font-medium text-gray-700 hover:bg-gray-50 hover:text-primary"
-              onClick={toggleMenu}
             >
               Find Professionals
             </Link>
             <Link
               to="/about"
               className="block px-3 py-2 text-base font-medium text-gray-700 hover:bg-gray-50 hover:text-primary"
-              onClick={toggleMenu}
             >
               About Us
             </Link>
             <Link
               to="/contact"
               className="block px-3 py-2 text-base font-medium text-gray-700 hover:bg-gray-50 hover:text-primary"
-              onClick={toggleMenu}
             >
               Contact
             </Link>
             {isLoggedIn ? (
-              <Link
-                to="/dashboard"
-                className="block px-3 py-2 text-base font-medium text-gray-700 hover:bg-gray-50 hover:text-primary"
-                onClick={toggleMenu}
-              >
-                Dashboard
-              </Link>
+              <>
+                <Link
+                  to="/notifications"
+                  className="block px-3 py-2 text-base font-medium text-gray-700 hover:bg-gray-50 hover:text-primary"
+                >
+                  Notifications
+                </Link>
+                <Link
+                  to="/dashboard"
+                  className="block px-3 py-2 text-base font-medium text-gray-700 hover:bg-gray-50 hover:text-primary"
+                >
+                  Dashboard
+                </Link>
+                <Link
+                  to="/settings"
+                  className="block px-3 py-2 text-base font-medium text-gray-700 hover:bg-gray-50 hover:text-primary"
+                >
+                  Settings
+                </Link>
+              </>
             ) : (
               <>
                 <Link
                   to="/login"
                   className="block px-3 py-2 text-base font-medium text-gray-700 hover:bg-gray-50 hover:text-primary"
-                  onClick={toggleMenu}
                 >
                   Login
                 </Link>
                 <Link
                   to="/register"
                   className="block px-3 py-2 text-base font-medium text-gray-700 hover:bg-gray-50 hover:text-primary"
-                  onClick={toggleMenu}
                 >
                   Sign Up
                 </Link>
@@ -135,3 +167,4 @@ const Navbar = () => {
 };
 
 export default Navbar;
+
